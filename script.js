@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mechanicalQuestions = document.getElementById('mechanical-questions');
   const electricalQuestions = document.getElementById('electrical-questions');
   const softwareQuestions = document.getElementById('software-questions');
+  const managementQuestions = document.getElementById('management-questions');
   
   // Variables
   const totalSteps = quizSections.length - 1; // Exclude completion screen
@@ -96,18 +97,26 @@ document.addEventListener('DOMContentLoaded', () => {
         mechanicalQuestions.style.display = 'block';
         electricalQuestions.style.display = 'none';
         softwareQuestions.style.display = 'none';
+        managementQuestions.style.display = 'none';
       } else if (domain === 'electrical') {
         mechanicalQuestions.style.display = 'none';
         electricalQuestions.style.display = 'block';
         softwareQuestions.style.display = 'none';
+        managementQuestions.style.display = 'none';
+      } else if (domain === 'management') {
+        mechanicalQuestions.style.display = 'none';
+        electricalQuestions.style.display = 'none';
+        softwareQuestions.style.display = 'none';
+        managementQuestions.style.display = 'block';
       } else if (domain === 'software') {
         mechanicalQuestions.style.display = 'none';
         electricalQuestions.style.display = 'none';
         softwareQuestions.style.display = 'block';
+        managementQuestions.style.display = 'none';
       }
       
       // Start timer for mechanical and electrical domains
-      if (domain === 'mechanical' || domain === 'electrical') {
+      if (domain === 'mechanical' || domain === 'electrical' || domain === 'management') {
         startTimer();
       }
       // Show submit button on last step
@@ -236,6 +245,15 @@ document.addEventListener('DOMContentLoaded', () => {
         isValid = false;
       }
       answers.software_submission_id = submissionId;
+    } else if (domain === 'management') {
+      // Validate all 5 management questions
+      for (let i = 1; i <= 5; i++) {
+          const fieldName = `ma_q${i}`;
+          if (!answers[fieldName] || answers[fieldName].trim() === '') {
+              isValid = false;
+              break;
+          }
+      }
     }
     
     if (!isValid) {
@@ -249,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function submitToGoogleSheets() {
     // Show loading overlay
     loadingOverlay.classList.remove('hidden');
+    loadingOverlay.style.display = 'flex';  // Add this line
     
     // Create a hidden iframe for form submission to avoid CORS issues
     const iframe = document.createElement('iframe');
@@ -275,7 +294,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Set up a timeout to handle cases where the iframe doesn't load
     const timeoutID = setTimeout(() => {
-      loadingOverlay.classList.add('hidden');
+      // loadingOverlay.classList.add('hidden');
+      if (loadingOverlay) {
+        loadingOverlay.classList.add('hidden');
+        loadingOverlay.style.display = 'none';  // Add this line
+    }
       
       // Show completion screen with error message
       currentStep = totalSteps;
@@ -302,7 +325,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add a load event to the iframe to handle completion
     iframe.onload = function() {
       clearTimeout(timeoutID);
-      loadingOverlay.classList.add('hidden');
+      // loadingOverlay.classList.add('hidden');
+      if (loadingOverlay) {
+        loadingOverlay.classList.add('hidden');
+        loadingOverlay.style.display = 'none';  // Add this line
+      }
       
       // Show completion screen
       currentStep = totalSteps;
