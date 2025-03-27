@@ -39,7 +39,7 @@
     </div>
 
     <div class="container2">
-        <div class="data">Phase 2 Recruitments</div>
+        <div class="data">Phase 2 registrations</div>
     </div>
 
 
@@ -83,9 +83,14 @@
                 <span>Electrical</span>
               </label>
               <label class="radio-option">
+                <input type="radio" name="domain" value="management">
+                <span>Management</span>
+              </label>
+              <label class="radio-option">
                 <input type="radio" name="domain" value="software">
                 <span>Software</span>
               </label>
+              
             </div>
           </div>
         </section>
@@ -407,6 +412,52 @@
               <textarea name="e_q14" class="textarea" rows="4"></textarea>
             </div>
           </div>
+          
+          <!-- Management Questions -->
+          <div id="management-questions" class="domain-questions">
+            <h2 class="section-title">Management Assessment</h2>
+            
+            <div class="question">
+              <p>1. Why did you choose VAUV, and why did you specifically opt for the Management domain instead of Mechanical, Electronics, Software, or Design? What makes you a good fit for management?</p>
+              <textarea name="ma_q1" class="textarea" rows="6"></textarea>
+            </div>
+          
+            <div class="question">
+              <p>2. VAUV is approaching a company for sponsorship. They receive multiple requests daily.</p>
+              <ul>
+                <li>Write a compelling subject line for your email.</li>
+                <li>Suggest one unique strategy beyond email to improve sponsorship chances.</li>
+              </ul>
+              <textarea name="ma_q2" class="textarea" rows="6"></textarea>
+            </div>
+          
+            <div class="question">
+              <p>3. VAUV has a competition in two months with multiple ongoing tasks.</p>
+              <ul>
+                <li>List two priority tasks that need to be completed first and explain why.</li>
+                <li>Suggest a backup plan if delays occur.</li>
+              </ul>
+              <textarea name="ma_q3" class="textarea" rows="6"></textarea>
+            </div>
+          
+            <div class="question">
+              <p>4. With a limited budget, VAUV is building the second iteration of its AUV.</p>
+              <ul>
+                <li>Which area (Electronics, Software, or Mechanical) gets the most funding? Why?</li>
+                <li>Name one area where costs can be reduced without affecting performance.</li>
+              </ul>
+              <textarea name="ma_q4" class="textarea" rows="6"></textarea>
+            </div>
+          
+            <div class="question">
+              <p>5. Your team is working remotely, and a shipment of critical parts arrives damaged a week before the competition.</p>
+              <ul>
+                <li>How would you handle the situation quickly?</li>
+                <li>What system would you use to track and coordinate team tasks efficiently?</li>
+              </ul>
+              <textarea name="ma_q5" class="textarea" rows="6"></textarea>
+            </div>
+          </div>
 
           <!-- Software Questions -->
           <div id="software-questions" class="domain-questions">
@@ -450,6 +501,8 @@
             </div>
           </div>
         </section>
+
+
 
         <!-- Completion Section -->
         <section id="completion" class="quiz-section">
