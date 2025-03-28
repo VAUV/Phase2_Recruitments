@@ -569,6 +569,11 @@ iframe[name="submission-frame"] {
     overflow-y: auto;
     padding: 1rem;
     position: relative;
+    display: none;
+}
+
+.domain-questions.active {
+  display: block;
 }
 
 /* Customize scrollbar */
@@ -599,4 +604,149 @@ iframe[name="submission-frame"] {
 /* Question spacing */
 .question {
     margin-bottom: 2rem;
+}
+
+
+/* mobile uI */
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  /* Card Layout */
+  .quiz-card {
+    width: 95%;
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+
+  /* Typography */
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  /* Form Elements */
+  .input, .textarea {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  /* Radio Options */
+  .radio-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .radio-option {
+    padding: 0.75rem;
+  }
+
+  /* Code Block */
+  .code-block {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    overflow-x: auto;
+  }
+
+  /* Navigation Buttons */
+  .card-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Progress Bar */
+  .progress-container {
+    width: 90%;
+  }
+
+  /* Images */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Loading Animation */
+  .circles {
+    transform: scale(0.8);
+  }
+
+  /* Timer */
+  .timer-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Questions */
+  .question {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Lists */
+  ul {
+    padding-left: 1rem;
+  }
+
+  /* Software Instructions */
+  .software-instructions {
+    padding: 1rem;
+  }
+
+  .task-links {
+    padding: 0.5rem;
+  }
+
+  /* QR Code */
+  .qr-code-placeholder img {
+    width: 200px;
+    height: auto;
+  }
+
+  /* Domain Questions */
+  .domain-questions {
+    padding: 0.5rem;
+  }
+}
+
+/* Small phones */
+@media screen and (max-width: 480px) {
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .step-indicator {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .question p {
+    font-size: 0.9rem;
+  }
+
+  pre.code-block {
+    font-size: 0.7rem;
+  }
+}
+
+/* Landscape mode */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  .quiz-card {
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .card-footer {
+    position: static;
+  }
 }
