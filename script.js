@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Variables
   const totalSteps = quizSections.length - 1; // Exclude completion screen
   let currentStep = 0;
-  let timeLeft = 900; // 15 minutes in seconds
+  let timeLeft = 7200; // 2days in seconds
   let timerInterval = null;
   const answers = {};
   
@@ -91,35 +91,73 @@ document.addEventListener('DOMContentLoaded', () => {
       
       answers.domain = selectedDomain.value;
       
+      const allDomainQuestions = [
+        mechanicalQuestions,
+        electricalQuestions,
+        softwareQuestions,
+        managementQuestions
+      ];
+    
+    // First hide all domain questions
+    allDomainQuestions.forEach(section => {
+        if (section) {
+            section.style.display = 'none';
+            section.classList.remove('active');
+        }
+    });
+    
+    // Then show the selected domain's questions
+    const domain = answers.domain;
+    let selectedSection;
+    
+    switch(domain) {
+        case 'mechanical':
+            selectedSection = mechanicalQuestions;
+            break;
+        case 'electrical':
+            selectedSection = electricalQuestions;
+            break;
+        case 'software':
+            selectedSection = softwareQuestions;
+            break;
+        case 'management':
+            selectedSection = managementQuestions;
+            break;
+    }
+    
+    if (selectedSection) {
+        selectedSection.style.display = 'block';
+        selectedSection.classList.add('active');
+    }
       // Show correct domain questions
-      const domain = answers.domain;
-      if (domain === 'mechanical') {
-        mechanicalQuestions.style.display = 'block';
-        electricalQuestions.style.display = 'none';
-        softwareQuestions.style.display = 'none';
-        managementQuestions.style.display = 'none';
-      } else if (domain === 'electrical') {
-        mechanicalQuestions.style.display = 'none';
-        electricalQuestions.style.display = 'block';
-        softwareQuestions.style.display = 'none';
-        managementQuestions.style.display = 'none';
-      } else if (domain === 'management') {
-        mechanicalQuestions.style.display = 'none';
-        electricalQuestions.style.display = 'none';
-        softwareQuestions.style.display = 'none';
-        managementQuestions.style.display = 'block';
-      } else if (domain === 'software') {
-        mechanicalQuestions.style.display = 'none';
-        electricalQuestions.style.display = 'none';
-        softwareQuestions.style.display = 'block';
-        managementQuestions.style.display = 'none';
-      }
+      // const domain = answers.domain;
+      // if (domain === 'mechanical') {
+      //   mechanicalQuestions.style.display = 'block';
+      //   electricalQuestions.style.display = 'none';
+      //   softwareQuestions.style.display = 'none';
+      //   managementQuestions.style.display = 'none';
+      // } else if (domain === 'electrical') {
+      //   mechanicalQuestions.style.display = 'none';
+      //   electricalQuestions.style.display = 'block';
+      //   softwareQuestions.style.display = 'none';
+      //   managementQuestions.style.display = 'none';
+      // } else if (domain === 'management') {
+      //   mechanicalQuestions.style.display = 'none';
+      //   electricalQuestions.style.display = 'none';
+      //   softwareQuestions.style.display = 'none';
+      //   managementQuestions.style.display = 'block';
+      // } else if (domain === 'software') {
+      //   mechanicalQuestions.style.display = 'none';
+      //   electricalQuestions.style.display = 'none';
+      //   softwareQuestions.style.display = 'block';
+      //   managementQuestions.style.display = 'none';
+      // }
       
-      // Start timer for mechanical and electrical domains
-      if (domain === 'mechanical' || domain === 'electrical' || domain === 'management') {
-        startTimer();
-      }
-      // Show submit button on last step
+      // // Start timer for mechanical and electrical domains
+      // if (domain === 'mechanical' || domain === 'electrical' || domain === 'management') {
+      //   //startTimer();
+      // }
+      // // Show submit button on last step
       nextBtn.classList.add('hidden');
       submitBtn.classList.remove('hidden');
     }
@@ -225,36 +263,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const domain = answers.domain;
     let isValid = true;
     
-    if (domain === 'mechanical' || domain === 'electrical') {
+    if (domain === 'mechanical' ) {
       // For simplicity, we're just checking if any answer was provided
       // You might want to make this validation more robust
-      const questionPrefix = domain === 'mechanical' ? 'm_q' : 'e_q';
-      const questionCount = domain === 'mechanical' ? 6 : 14;
+      // const questionPrefix = domain === 'mechanical' ? 'm_q' : 'e_q';
+      // const questionCount = domain === 'mechanical' ? 6 : 14;
       
-      for (let i = 1; i <= questionCount; i++) {
-        const fieldName = `${questionPrefix}${i}`;
-        if (!answers[fieldName]) {
-          isValid = false;
-          break;
-        }
+      // for (let i = 1; i <= questionCount; i++) {
+      //   const fieldName = `${questionPrefix}${i}`;
+      //   if (!answers[fieldName]) {
+      //     isValid = false;
+      //     break;
+      //   }
+      // }
+      const submissionId = document.getElementById('mech_submission_id').value;
+      if (!submissionId) {
+        isValid = false;
       }
-    } else if (domain === 'software') {
+      answers.mech_submission_id = submissionId;
+    }
+    else if (domain === 'electrical') {
+      // Check if submission ID is entered
+      const submissionId = document.getElementById('electrical_submission_id').value;
+      if (!submissionId) {
+        isValid = false;
+      }
+      answers.electrical_submission_id = submissionId;
+    } 
+    
+    else if (domain === 'management') {
+      const submissionId = document.getElementById('management_submission_id').value;
+      if (!submissionId) {
+        isValid = false;
+      }
+      answers.management_submission_id= submissionId;
+    }
+
+    else if (domain === 'software') {
       // Check if submission ID is entered
       const submissionId = document.getElementById('software_submission_id').value;
       if (!submissionId) {
         isValid = false;
       }
       answers.software_submission_id = submissionId;
-    } else if (domain === 'management') {
-      // Validate all 5 management questions
-      for (let i = 1; i <= 5; i++) {
-          const fieldName = `ma_q${i}`;
-          if (!answers[fieldName] || answers[fieldName].trim() === '') {
-              isValid = false;
-              break;
-          }
-      }
-    }
+    } 
+    
+    
     
     if (!isValid) {
       showToast('Please answer all questions', 'error');
